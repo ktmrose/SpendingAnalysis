@@ -1,10 +1,13 @@
+import os
 import mysql.connector
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
+db_username = os.getenv("costco_purchases_user")
+db_password = os.getenv("costco_purchases_password")
 # connect to database
-db = mysql.connector.connect( host='localhost', user="analysis", password="analyzeDisBooty", database="costcopurchases")
+db = mysql.connector.connect( host='localhost', user=db_username, password=db_password, database="costcopurchases")
 
 # first, track spending over time (months vs dollars)
 allSpendingQuery = "SELECT TransactionDate, SoldPrice FROM TRANSACTIONS"
