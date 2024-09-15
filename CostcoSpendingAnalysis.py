@@ -53,9 +53,7 @@ all_dates = pd.date_range(start=df_member_spending.index.min(), end=df_member_sp
 # Create a MultiIndex that includes all dates for all PersonIDs
 multi_index = pd.MultiIndex.from_product([all_dates, df_member_spending['PersonID'].unique()], names=['TransactionDate', 'PersonID'])
 
-# Reindex DataFrame
 df_member_monthly = df_member_monthly.reindex(multi_index, fill_value=0)
-
 df_member_pivot = df_member_monthly.unstack('PersonID') # each member is a column
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -73,6 +71,24 @@ ax.set_xlabel('Month')
 ax.set_ylabel('Dollars')
 ax.grid(True)
 ax.legend(title='PersonID', loc='upper left')
+
+# third, breakdown spending on non-food items and sale items
+df_spending_breakdown = pd.read_sql_query(config.spending_breakdown_query, db)
+df_pivot_spending_breakdown = df_spending_breakdown.pivot_table(index="PersonID", columns = ['IsEdible', 'DiscountStatus'], values = "TotalSpent", fill_value = 0)
+dollars_spent = df_pivot_spending_breakdown.sum(axis=1)
+
+for member in df_pivot_spending_breakdown.index:
+    data = df_pivot_spending_breakdown.loc[member]
+    total_spent = dollars_spent.loc[member]
+    labels = [
+        'Non-food items at full price',
+        'Food items at full price',
+        'Non-food items on sale',
+        'Food items on sale'
+    ]
+    plt.figure(figsize=(6, 6))
+    plt.pie(data, labels=labels, autopct='%1.1f%%', startangle=140)
+    plt.title(f'{config.member_ids[member]} total spent: ${total_spent:.2f}')
 
 plt.show()
 
