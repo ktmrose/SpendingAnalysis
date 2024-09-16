@@ -70,7 +70,10 @@ ax.set_title('Individual Costco Spending Over Time')
 ax.set_xlabel('Month')
 ax.set_ylabel('Dollars')
 ax.grid(True)
-ax.legend(title='PersonID', loc='upper left')
+
+handles, labels = ax.get_legend_handles_labels()
+labels = [config.member_ids[int(label.split(', ')[1].strip(')'))] for label in labels]
+ax.legend(handles, labels, title='Member', loc='upper left')
 
 # third, breakdown spending on non-food items and sale items
 df_spending_breakdown = pd.read_sql_query(config.spending_breakdown_query, db)
