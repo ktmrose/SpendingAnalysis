@@ -1,2 +1,47 @@
+*Not associated with any courses or work assignments. This purely a personally-driven, independent, scientifically-driven budgeting and data analysis/visualization project.*
+
 # SpendingAnalysis
-Script to analyze household purchases
+Retail therapy, albeit culturally accepted, often places substantial burdens on household budgets, contributes to negative mental health outcomes, and imposes cascading destructive effects on global ecosystems.  Many American households seek certain standards of quality and value through big-box retail stores, often purchasing both necessary and unnecessary items because they are "great deals", yet before policies can be implemented, a better understanding of current household spending is necessary. This exercise shows discretionary spending with regards to one of our household's largest vendors. By tracking purchases over the span of ten months, preliminary trends emerge of how dollars are spent on both a cumulative household level and individual member levels. Future studies in this will continue tracking currently captured data, which may enable more descriptive statistical analysis. Existing data may have additional context that can be quantified for improved analysis.  This exploration elucidated early trends in purchases both at a household level and on an individual level.
+
+# Introduction
+Retail therapy, albeit culturally accepted, often places substantial burdens on household budgets, contributes to negative mental health outcomes, and imposes cascading destructive effects on global ecosystems. Many American households seek certain standards of quality and value through big-box retail stores, often purchasing both necessary and unnecessary items because they are "great deals". However, better understanding of current spending must be elucidated before any policies at either the micro or macro scale can be implemented. Author H. James Harrington said, “Measurement is the first step that leads to control and eventually to improvement." This exercise elucidates discretionary spending with regards to one of our household's largest vendors.
+
+# Methods
+Household purchase data extracted manually from Costco warehouse accounts between the months of October 2023 and August 2024 on a locally hosted MySQL database (Figure 1). Microsoft CoPilot occasionally assisted with elucidating certain especially cryptic receipt description codes. Select descriptors (i.e. edibility) are determined manually and without AI assistance. In the case of isEdibile flag, an item was termed “edible” if it was designed to be ingested. Supplements, although not food, are designed to be digested and therefore “edible” whereas gum is not designed to be digested and labeled “not edible”. 
+At the time of writing (mid-September 2024), not all purchases for the month of September were added to the database for analysis. Python script and configuration file used for data analysis and graph generation are included in this repository.
+
+![Figure 1](https://github.com/user-attachments/assets/84ba4478-c521-4718-a2e1-24b78c85124f)
+
+Figure 1: Entity relationship diagram of locally hosted MySql database of household Costco purchases.
+
+# Results
+Total household Costco Spending was determined in terms of both the number of items purchased and the dollars spent per month (Figure 2). The number of items acquired tracks closely with the dollars spent, except in the month of April when more money was spent on fewer items, indicating purchases of higher cost items. November 2023 was the month with the lowest number of purchases in terms of both dollars and items with under 40 items totaling less than $750. The highest amount of spending and items acquired May 2024 showed over 120 items purchased and over $2000 spent.
+Individual dollars spent at Costco per individual per month is shown in Figure 3. Individual members are identified with a two letter abbreviation of a pseudonym for privacy reasons. Purchases trended toward generally equivalent purchasing in the beginning of the study period in October 2023, but in the spring season of 2024 members BF and RM more than doubled dollars spent, except for the month of June, whereas KR spent fewer dollars as time progresses. 
+A further breakdown of food vs inedible and sale vs non-sale items per household member approximates how many more dollars or spent on each of these four categories (Figure 4). KR spent the least amount of total money at $2201.57 (Figure 4C) whereas RM spent the most amount of total money during the study period at $5303.99 (Figure 4B). Each individual displayed a higher or lower proportion of their total spent dollars depending on the category. The highest proportionate spender for food items on sale (22.1%) is RM, the lowest is KR (5.5%). For full priced (non-sale) food, the highest proportionate spender (21.3%) is BF and the lowest is RM at $5.9%. Non-food item proportionate spending on sale showed KR as the highest (63.0%) and BF at the lowest (49.5%). Finally, the highest proportion of amount spent on non-food items at full price is BF (23.0%) and the lowest is KR (16.2%).
+
+
+![Figure_2](https://github.com/user-attachments/assets/aae6c841-650e-415d-a205-34c1a42a99ce)
+
+Figure 2: Total household spending at Costco by month.
+
+
+![Figure_3](https://github.com/user-attachments/assets/365e5504-1f79-4fd0-8955-edd2ff3e5482)
+
+Figure 3: Costco spending in dollars per individual. Individual members identified by pseudonym initials.
+
+
+A) ![Figure_4A](https://github.com/user-attachments/assets/e76b296d-6fde-48cf-80be-1c23f4871ab4)
+
+B) ![Figure_4B](https://github.com/user-attachments/assets/02d683ae-9e7f-4e29-9261-bdd14fddd5f5)
+
+C) ![Figure_4C](https://github.com/user-attachments/assets/3620a2a1-4bbe-42f0-ab54-795c0b22c444)
+
+Figure 4: Individual Costco spending in dollars for categories of sale items v non-sale items and food (isEdible) vs non-food items
+
+# Discussion
+ Analyzing how money is spent at the household level with a significant vendor sheds light into effectiveness of personal budgeting and resilience or lack thereof to a big box store version of mindful spending over time. This is a crucial prerequisite to applying desired changes in order to minimize undesired consequences. By tracking purchases over the span of ten months, preliminary trends emerge of how dollars are spent on both a cumulative household level and individual member levels. 
+	The greatest variation of spending occurred at the beginning of the study period. Although the household consisted of all three members during the study period, RF had moved in with the established KR and BF two months’ prior. The variability in the spending during this initial phase may be attributed to the period of adjustment as members of the household figure out how best to collaborate or establish boundaries. KR and BF have a history of heavy collaboration in terms of Costco spending as shown by inverse spending respective to the other (Figure 2). Likewise, RM began courting a non-household individual during the study period, resulting in financial subsidies manifested in RM’s Costco spending. Without additional data, it is impossible to separate what amount of spending is from/for RM only and how much of spending is due to RM’s dependent.
+	This context is important in discerning key trends within presented results. When taking into account the aforementioned extraneous variables, KR and BF can effectively be considered one cohesive two-person household and RM plus the outsider can be interpreted as financially joined in a similar way beginning late spring 2024. Although at the time of the study, combined Costco spending of KR and BF household is more than RM and extraneous individual “household”, given recent trends in individual spending on the later part of 2024, early divergence may increase in these two households’ spending as the study continues. 
+	Individual psychological effects are important to consider in addition to sociological interpersonal dynamics. The proportion of money spent on food vs non-food and sale vs non-sale items may be affected by the decision of the individual to wait on purchases for a sale, holding off on both essential and non-essential purchases for sale. In addition, the presence of samples at the time of a shopping trip may heavily influence “impulse” purchases of food items on sale. Without further data, these postulations can only remain speculation. 
+	Future studies in this will continue tracking currently captured data, which may enable more descriptive statistical analysis. Additionally, present data may have additional context that can be quantified for improved analysis. One such idea includes categorizing food purchases by certain qualities such as “fresh”, “frozen”, “raw”, “uncooked”, “processed”, and so on. Non-food items can be categorized similarly as “clothes”, “appliances”, “electronics”, etc. Such categories would also have to be determined subjectively, as Costco purchase history at the time of this writing only provides transaction date, item id, receipt description, sold price, manufacturer’s discount if applicable. All other labels need context beyond AI’s capabilities to preserve integrity. 
+	In conclusion, this exploration elucidated early trends in purchases both at a household level, and further dissected on an individual level. Continuation of the current exploration may confirm some of the trends identified in the 10-month study period. Addition of other qualitative descriptors of each item may also elucidate the broader impact on global ecosystems and personal health. 
