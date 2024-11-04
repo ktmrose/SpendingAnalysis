@@ -84,41 +84,29 @@ df_spending_monthly = df_spending_breakdown.groupby([pd.Grouper(freq='MS'), 'Per
 # Plot stacked bar graph for each PersonID
 person_ids = df_spending_breakdown['PersonID'].unique()
 
-for person_id in person_ids:
+fig, axes = plt.subplots(nrows=1, ncols=len(person_ids), figsize=(6 * len(person_ids), 10), sharex=True)
+
+max_y = df_spending_monthly.sum(axis=1).max()
+
+for i, person_id in enumerate(person_ids):
     df_person = df_spending_monthly.xs(person_id, level='PersonID')
 
-    # Filter for food and non-food items
-    df_food = df_person.loc[:, df_person.columns.get_level_values(1).isin(config.food_items)]
-    df_non_food = df_person.loc[:, df_person.columns.get_level_values(1).isin(config.non_food_items)]
-
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10), sharex=True)
-    
-    # Plot food items with a different color scheme
+    # Plot combined items
     color_map = plt.get_cmap('tab20')
-    food_plot = df_food.plot(kind='bar', stacked=True, ax=axes[0], color=color_map.colors[:len(df_food.columns)])
-    axes[0].set_title(f'{config.member_ids[person_id]} - Monthly Spending on Food')
-    axes[0].set_ylabel('Dollars Spent')
+    df_person.plot(kind='bar', stacked=True, ax=axes[i], color=color_map.colors[:len(df_person.columns)])
+    axes[i].set_title(f'{config.member_ids[person_id]} - Monthly Spending by Category')
+    axes[i].set_ylabel('Dollars Spent')
+    axes[i].set_ylim(0, max_y)
+    # Create a single legend
+    if (i == len(person_ids) - 1):
+        axes[i].legend().set_visible(True)
+    else:
+        axes[i].legend().set_visible(False)
 
-    # Plot non-food items
-    non_food_plot = df_non_food.plot(kind='bar', stacked=True, ax=axes[1])
-    axes[1].set_title(f'{config.member_ids[person_id]} - Monthly Spending on Non-Food')
-    axes[1].set_ylabel('Dollars Spent')
+# Ensure Month format from the query is used directly
+axes[-1].set_xticklabels(df_person.index.get_level_values(0).strftime('%Y-%m'))
 
-    # Modify legend labels for food items
-    handles, labels = axes[0].get_legend_handles_labels()
-    new_labels = [label.split(", ")[1].strip(")") for label in labels]
-    axes[0].legend(handles, new_labels, title='Category', bbox_to_anchor=(1.05, 1), loc='upper left')
-
-    # Modify legend labels for non-food items
-    handles, labels = axes[1].get_legend_handles_labels()
-    new_labels = [label.split(", ")[1].strip(")") for label in labels]
-    axes[1].legend(handles, new_labels, title='Category', bbox_to_anchor=(1.05, 1), loc='upper left')
-
-    # Ensure Month format from the query is used directly
-    axes[1].set_xticklabels(df_person.index.get_level_values(0).strftime('%Y-%m'))
-
-    plt.xlabel('Month')
-    plt.tight_layout()
+#Fourth, make a table showing the top 5 spending categories for each person
 
 plt.show()
 
