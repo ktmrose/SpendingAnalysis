@@ -103,9 +103,6 @@ for i, person_id in enumerate(person_ids):
     else:
         axes[i].legend().set_visible(False)
 
-# Ensure Month format from the query is used directly
-axes[-1].set_xticklabels(df_person.index.get_level_values(0).strftime('%Y-%m'))
-
 #Fourth, make a table showing the top 5 spending categories for each person
 
 plt.show()
