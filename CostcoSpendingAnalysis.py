@@ -83,13 +83,18 @@ df_spending_monthly = df_spending_breakdown.groupby([pd.Grouper(freq='MS'), 'Per
 
 # Plot stacked bar graph for each PersonID
 person_ids = df_spending_breakdown['PersonID'].unique()
+all_months = pd.date_range(start='2024-01-01', end='2025-01-31', freq='MS')
+multi_index = pd.MultiIndex.from_product([all_months, person_ids], names=['Month', 'PersonID']) 
+
+# Reindex the DataFrame using the MultiIndex 
+df_spending_monthly_reindexed = df_spending_monthly.reindex(multi_index, fill_value=0)
 
 fig, axes = plt.subplots(nrows=1, ncols=len(person_ids), figsize=(6 * len(person_ids), 10), sharex=True)
 
-max_y = df_spending_monthly.sum(axis=1).max()
+max_y = df_spending_monthly_reindexed.sum(axis=1).max()
 
 for i, person_id in enumerate(person_ids):
-    df_person = df_spending_monthly.xs(person_id, level='PersonID')
+    df_person = df_spending_monthly_reindexed.xs(person_id, level='PersonID')
 
     # Plot combined items
     color_map = plt.get_cmap('tab20')
